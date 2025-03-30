@@ -12,7 +12,7 @@
     <artifactId>server-admin</artifactId>
 
     <description>
-        web服务入口
+        server服务入口
     </description>
 
     <dependencies>

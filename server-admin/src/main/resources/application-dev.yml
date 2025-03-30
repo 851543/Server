@@ -1,0 +1,34 @@
+server-config:
+  profile: D:/server/uploadPath
+  addressEnabled: false
+  captchaType: math
+
+server:
+  port: 8080
+
+redis:
+  host: localhost
+  port: 6379
+  database: 0
+  timeout: 10s
+
+token:
+  header: Authorization
+  secret: abcdefghijklmnopqrstuvwxyz
+  expireTime: 30
+
+swagger:
+  enabled: true
+  pathMapping: /dev-api
+
+user:
+  password:
+    maxRetryCount: 5
+    lockTime: 10
+
+datasource:
+  host: localhost
+  port: 3306
+  database: server
+  username: root
+  password: 1314520ok
