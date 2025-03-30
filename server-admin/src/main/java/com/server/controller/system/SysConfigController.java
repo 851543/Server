@@ -2,6 +2,9 @@ package com.server.controller.system;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -25,10 +28,10 @@ import com.server.service.ISysConfigService;
 /**
  * 参数配置 信息操作处理
  *
- * @author ruoyi
  */
 @RestController
 @RequestMapping("/system/config")
+@Api(tags = "配置")
 public class SysConfigController extends BaseController
 {
     @Autowired
@@ -39,6 +42,7 @@ public class SysConfigController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:config:list')")
     @GetMapping("/list")
+    @ApiOperation("获取全部配置信息")
     public TableDataInfo list(SysConfig config)
     {
         startPage();
@@ -49,6 +53,7 @@ public class SysConfigController extends BaseController
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('system:config:export')")
     @PostMapping("/export")
+    @ApiOperation("导出全部配置信息")
     public void export(HttpServletResponse response, SysConfig config)
     {
         List<SysConfig> list = configService.selectConfigList(config);
@@ -61,6 +66,7 @@ public class SysConfigController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:config:query')")
     @GetMapping(value = "/{configId}")
+    @ApiOperation("根据编号获取配置信息")
     public AjaxResult getInfo(@PathVariable Long configId)
     {
         return success(configService.selectConfigById(configId));
@@ -70,6 +76,7 @@ public class SysConfigController extends BaseController
      * 根据参数键名查询参数值
      */
     @GetMapping(value = "/configKey/{configKey}")
+    @ApiOperation("根据键名获取配置信息")
     public AjaxResult getConfigKey(@PathVariable String configKey)
     {
         return success(configService.selectConfigByKey(configKey));
@@ -81,6 +88,7 @@ public class SysConfigController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:config:add')")
     @Log(title = "参数管理", businessType = BusinessType.INSERT)
     @PostMapping
+    @ApiOperation("新增配置信息")
     public AjaxResult add(@Validated @RequestBody SysConfig config)
     {
         if (!configService.checkConfigKeyUnique(config))
@@ -97,6 +105,7 @@ public class SysConfigController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:config:edit')")
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
     @PutMapping
+    @ApiOperation("修改配置信息")
     public AjaxResult edit(@Validated @RequestBody SysConfig config)
     {
         if (!configService.checkConfigKeyUnique(config))
@@ -113,6 +122,7 @@ public class SysConfigController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:config:remove')")
     @Log(title = "参数管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{configIds}")
+    @ApiOperation("批量删除配置信息")
     public AjaxResult remove(@PathVariable Long[] configIds)
     {
         configService.deleteConfigByIds(configIds);
@@ -125,6 +135,7 @@ public class SysConfigController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:config:remove')")
     @Log(title = "参数管理", businessType = BusinessType.CLEAN)
     @DeleteMapping("/refreshCache")
+    @ApiOperation("更新配置信息缓存")
     public AjaxResult refreshCache()
     {
         configService.resetConfigCache();
