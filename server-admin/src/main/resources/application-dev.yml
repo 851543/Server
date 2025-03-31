@@ -19,7 +19,7 @@ token:
 
 swagger:
   enabled: true
-  pathMapping: /dev-api
+  pathMapping: /
 
 user:
   password:
