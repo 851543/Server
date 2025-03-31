@@ -28,8 +28,8 @@ public class DataSourceAspect
 {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Pointcut("@annotation(com.server.framework.annotation.DataSource)"
-            + "|| @within(com.server.framework.annotation.DataSource)")
+    @Pointcut("@annotation(com.server.annotation.DataSource)"
+            + "|| @within(com.server.annotation.DataSource)")
     public void dsPointCut()
     {
 
