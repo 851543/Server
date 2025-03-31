@@ -94,7 +94,7 @@ public class SysUserController extends BaseController
     }
 
     @PostMapping("/importTemplate")
-    @ApiOperation("用户数据")
+    @ApiOperation("导出用户Excel模板")
     public void importTemplate(HttpServletResponse response)
     {
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
