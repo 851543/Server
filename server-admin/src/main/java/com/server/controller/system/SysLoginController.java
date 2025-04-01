@@ -3,6 +3,8 @@ package com.server.controller.system;
 import java.util.List;
 import java.util.Set;
 
+import com.server.core.text.Convert;
+import com.server.service.ISysConfigService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,9 @@ public class SysLoginController
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private ISysConfigService configService;
 
     /**
      * 登录方法
@@ -99,5 +104,12 @@ public class SysLoginController
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
         return AjaxResult.success(menuService.buildMenus(menus));
+    }
+
+    @GetMapping("/forgetPasswordEnabled")
+    @ApiOperation("获取忘记密码开关")
+    public AjaxResult getForgetPasswordEnabled()
+    {
+        return AjaxResult.success(Convert.toBool(configService.selectConfigByKey("sys.account.forgetPasswordEnabled")));
     }
 }

@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 
 import com.server.config.AdminServerConfig;
+import com.server.core.text.Convert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -87,5 +88,14 @@ public class CaptchaController {
         ajax.put("uuid", uuid);
         ajax.put("img", Base64.encode(os.toByteArray()));
         return ajax;
+    }
+
+    /**
+     * 获取滑块开关
+     */
+    @GetMapping("/sliderEnabled")
+    @ApiOperation("获取滑块开关")
+    public AjaxResult getSliderEnabled() {
+        return AjaxResult.success(Convert.toBool(configService.selectConfigByKey("sys.account.sliderEnabled")));
     }
 }
