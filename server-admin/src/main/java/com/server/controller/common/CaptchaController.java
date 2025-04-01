@@ -89,13 +89,4 @@ public class CaptchaController {
         ajax.put("img", Base64.encode(os.toByteArray()));
         return ajax;
     }
-
-    /**
-     * 获取滑块开关
-     */
-    @GetMapping("/sliderEnabled")
-    @ApiOperation("获取滑块开关")
-    public AjaxResult getSliderEnabled() {
-        return AjaxResult.success(Convert.toBool(configService.selectConfigByKey("sys.account.sliderEnabled")));
-    }
 }

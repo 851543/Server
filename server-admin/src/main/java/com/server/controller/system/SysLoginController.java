@@ -1,13 +1,23 @@
 package com.server.controller.system;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
+import com.google.code.kaptcha.Producer;
+import com.server.config.AdminServerConfig;
+import com.server.constant.CacheConstants;
+import com.server.core.redis.RedisCache;
 import com.server.core.text.Convert;
 import com.server.service.ISysConfigService;
+import com.server.utils.sign.Base64;
+import com.server.utils.uuid.IdUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +33,9 @@ import com.server.web.service.SysLoginService;
 import com.server.web.service.SysPermissionService;
 import com.server.web.service.TokenService;
 import com.server.service.ISysMenuService;
+
+import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 
 /**
  * 登录验证
@@ -44,6 +57,15 @@ public class SysLoginController
     @Autowired
     private TokenService tokenService;
 
+    @Resource(name = "captchaProducer")
+    private Producer captchaProducer;
+
+    @Resource(name = "captchaProducerMath")
+    private Producer captchaProducerMath;
+
+    @Autowired
+    private RedisCache redisCache;
+
     @Autowired
     private ISysConfigService configService;
 
@@ -62,6 +84,24 @@ public class SysLoginController
         String token = loginService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
                 loginBody.getUuid());
         ajax.put(Constants.TOKEN, token);
+        return ajax;
+    }
+
+    /**
+     * 获取登陆功能开关
+     * @return
+     */
+    @GetMapping("/loginFunctionEnabled")
+    @ApiOperation("获取登陆功能开关")
+    public AjaxResult getLoginFunctionEnabled()
+    {
+        AjaxResult ajax = AjaxResult.success();
+        Boolean sliderEnabled = Convert.toBool(configService.selectConfigByKey("sys.account.sliderEnabled"));
+        ajax.put("sliderEnabled", sliderEnabled);
+        Boolean forgetPasswordEnabled = Convert.toBool(configService.selectConfigByKey("sys.account.forgetPasswordEnabled"));
+        ajax.put("forgetPasswordEnabled", forgetPasswordEnabled);
+        Boolean registerUser = Convert.toBool(configService.selectConfigByKey("sys.account.registerUser"));
+        ajax.put("registerUserEnabled", registerUser);
         return ajax;
     }
 
@@ -104,12 +144,5 @@ public class SysLoginController
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
         return AjaxResult.success(menuService.buildMenus(menus));
-    }
-
-    @GetMapping("/forgetPasswordEnabled")
-    @ApiOperation("获取忘记密码开关")
-    public AjaxResult getForgetPasswordEnabled()
-    {
-        return AjaxResult.success(Convert.toBool(configService.selectConfigByKey("sys.account.forgetPasswordEnabled")));
     }
 }

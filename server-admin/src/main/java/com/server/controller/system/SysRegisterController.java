@@ -40,11 +40,4 @@ public class SysRegisterController extends BaseController
         String msg = registerService.register(user);
         return StringUtils.isEmpty(msg) ? success() : error(msg);
     }
-
-    @GetMapping("/registerEnabled")
-    @ApiOperation("获取注册用户开关")
-    public AjaxResult getRegisterEnabled()
-    {
-        return success(Convert.toBool(configService.selectConfigByKey("sys.account.registerUser")));
-    }
 }
