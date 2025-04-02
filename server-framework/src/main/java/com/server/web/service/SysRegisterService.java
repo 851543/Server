@@ -42,9 +42,9 @@ public class SysRegisterService {
 
         String cacheCode = redisCache.getCacheObject(CacheConstants.MAIL_CODE_KEY + registerBody.getEmail()); // 获取缓存中该账号的验证码
         if (cacheCode == null) {
-            msg = "验证码已过期，请重新获取！";
+            msg = MessageUtils.message("user.captcha.expired");
         } else if (!cacheCode.equals(registerBody.getVerifyCode())) {
-            msg = "验证码错误！";
+            msg = MessageUtils.message("user.captcha.invalid");
         } else if (StringUtils.isEmpty(username)) {
             msg = "用户名不能为空";
         } else if (StringUtils.isEmpty(password)) {

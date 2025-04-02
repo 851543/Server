@@ -32,3 +32,8 @@ datasource:
   database: server
   username: root
   password: 1314520ok
+
+mail:
+  host: smtp.qq.com
+  username: 851543@qq.com
+  password: qxjtglqhflmdcacb

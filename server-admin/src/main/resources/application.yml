@@ -90,11 +90,11 @@ spring:
   # 邮箱配置
   mail:
     # 邮箱服务
-    host: smtp.qq.com
+    host: ${mail.host}
     # 邮箱账号
-    username: 851543@qq.com
+    username: ${mail.username}
     # 授权码
-    password: qxjtglqhflmdcacb
+    password: ${mail.password}
     # 安全连接
     properties:
       mail:

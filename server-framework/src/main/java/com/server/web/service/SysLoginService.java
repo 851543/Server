@@ -19,6 +19,9 @@ import com.server.manager.factory.AsyncFactory;
 import com.server.security.context.AuthenticationContextHolder;
 import com.server.service.ISysConfigService;
 import com.server.service.ISysUserService;
+import com.server.utils.spring.SpringUtils;
+import io.netty.util.internal.ObjectUtil;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -60,6 +63,12 @@ public class SysLoginService {
     public String login(String username, String password, String code, String uuid) {
         // 验证码校验
         validateCaptcha(username, code, uuid);
+        // 邮箱账号登录
+        if (username.contains("@")){
+            SysUser user = userService.selectUserByEmail(username);
+            if (ObjectUtils.isEmpty(user)) {throw new ServiceException(MessageUtils.message("user.email.not_bound"));}
+            username =  user.getUserName();
+        }
         // 登录前置校验
         loginPreCheck(username, password);
         // 用户验证
@@ -168,11 +177,11 @@ public class SysLoginService {
         sysUser.setEmail(forgetPwdBody.getEmail());
         String cacheCode = redisCache.getCacheObject(CacheConstants.MAIL_CODE_KEY + forgetPwdBody.getEmail()); // 获取缓存中该账号的验证码
         if (cacheCode == null) {
-            return "验证码已过期，请重新获取！";
+            return MessageUtils.message("user.captcha.expired");
         } else if (!cacheCode.equals(forgetPwdBody.getVerifyCode())) {
-            return "验证码错误！";
+            return MessageUtils.message("user.captcha.invalid");
         } else if (userService.checkEmailUnique(sysUser)) {
-            return "邮箱地址未绑定账号";
+            return MessageUtils.message("user.email.not_bound");
         }
         sysUser = userService.selectUserByEmail(forgetPwdBody.getEmail());
         sysUser.setPassword(SecurityUtils.encryptPassword(forgetPwdBody.getPassword()));
