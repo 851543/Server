@@ -87,6 +87,20 @@ spring:
         max-active: 8
         # #连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1ms
+  # 邮箱配置
+  mail:
+    # 邮箱服务
+    host: smtp.qq.com
+    # 邮箱账号
+    username: 851543@qq.com
+    # 授权码
+    password: qxjtglqhflmdcacb
+    # 安全连接
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
 
 # token配置
 token:

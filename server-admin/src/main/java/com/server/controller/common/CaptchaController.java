@@ -6,15 +6,20 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.server.config.AdminServerConfig;
 import com.server.core.text.Convert;
+import com.server.web.service.MailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FastByteArrayOutputStream;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.code.kaptcha.Producer;
@@ -30,6 +35,7 @@ import com.server.service.ISysConfigService;
  * 验证码操作处理
  */
 @RestController
+@Validated
 @Api(tags = "登陆")
 public class CaptchaController {
     @Resource(name = "captchaProducer")
@@ -43,6 +49,9 @@ public class CaptchaController {
 
     @Autowired
     private ISysConfigService configService;
+
+    @Autowired
+    private MailService mailService;
 
     /**
      * 生成验证码
@@ -88,5 +97,14 @@ public class CaptchaController {
         ajax.put("uuid", uuid);
         ajax.put("img", Base64.encode(os.toByteArray()));
         return ajax;
+    }
+
+    /**
+     * 生成邮箱验证码
+     */
+    @GetMapping("/mailCode")
+    @ApiOperation("生成邮箱验证码")
+    public AjaxResult getMailCode(@Email(message = "邮箱格式不正确")  @NotNull(message = "邮箱地址不能为空") String mailAddress){
+        return AjaxResult.success(mailService.getCode(mailAddress));
     }
 }

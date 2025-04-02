@@ -171,4 +171,9 @@ public class Constants
      */
     public static final String[] JOB_ERROR_STR = { "java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml",
             "org.springframework", "org.apache", "com.server.utils.file", "com.server.config", "com.server.generator" };
+
+    /**
+     * 邮箱验证码有效期（分钟）
+     */
+    public static final Integer MAIL_EXPIRATION = 5;
 }

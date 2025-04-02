@@ -4,8 +4,12 @@
     <file url="file://$PROJECT_DIR$/server-admin/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/server-admin/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/server-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/server-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/server-framework/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/server-framework/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/server-system/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/server-system/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
 </project>
