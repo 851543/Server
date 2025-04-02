@@ -9,9 +9,11 @@ import java.util.concurrent.TimeUnit;
 import com.google.code.kaptcha.Producer;
 import com.server.config.AdminServerConfig;
 import com.server.constant.CacheConstants;
+import com.server.core.domain.model.ForgetPwdBody;
 import com.server.core.redis.RedisCache;
 import com.server.core.text.Convert;
 import com.server.service.ISysConfigService;
+import com.server.utils.StringUtils;
 import com.server.utils.sign.Base64;
 import com.server.utils.uuid.IdUtils;
 import io.swagger.annotations.Api;
@@ -39,12 +41,10 @@ import javax.imageio.ImageIO;
 
 /**
  * 登录验证
- *
  */
 @RestController
 @Api(tags = "登陆")
-public class SysLoginController
-{
+public class SysLoginController {
     @Autowired
     private SysLoginService loginService;
 
@@ -77,8 +77,7 @@ public class SysLoginController
      */
     @PostMapping("/login")
     @ApiOperation("登陆")
-    public AjaxResult login(@RequestBody LoginBody loginBody)
-    {
+    public AjaxResult login(@RequestBody LoginBody loginBody) {
         AjaxResult ajax = AjaxResult.success();
         // 生成令牌
         String token = loginService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
@@ -88,13 +87,26 @@ public class SysLoginController
     }
 
     /**
+     * 忘记密码
+     *
+     * @param forgetPwdBody 忘记密码方法
+     * @return 结果
+     */
+    @PostMapping("/forgetPwd")
+    @ApiOperation("忘记密码")
+    public AjaxResult forgetPwd(@RequestBody ForgetPwdBody forgetPwdBody) {
+        String msg = loginService.forgetPwd(forgetPwdBody);
+        return StringUtils.isEmpty(msg) ? AjaxResult.success() : AjaxResult.error(msg);
+    }
+
+    /**
      * 获取登陆功能开关
+     *
      * @return
      */
     @GetMapping("/loginFunctionEnabled")
     @ApiOperation("获取登陆功能开关")
-    public AjaxResult getLoginFunctionEnabled()
-    {
+    public AjaxResult getLoginFunctionEnabled() {
         AjaxResult ajax = AjaxResult.success();
         Boolean sliderEnabled = Convert.toBool(configService.selectConfigByKey("sys.account.sliderEnabled"));
         ajax.put("sliderEnabled", sliderEnabled);
@@ -112,16 +124,14 @@ public class SysLoginController
      */
     @GetMapping("getInfo")
     @ApiOperation("获取用户信息")
-    public AjaxResult getInfo()
-    {
+    public AjaxResult getInfo() {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         SysUser user = loginUser.getUser();
         // 角色集合
         Set<String> roles = permissionService.getRolePermission(user);
         // 权限集合
         Set<String> permissions = permissionService.getMenuPermission(user);
-        if (!loginUser.getPermissions().equals(permissions))
-        {
+        if (!loginUser.getPermissions().equals(permissions)) {
             loginUser.setPermissions(permissions);
             tokenService.refreshToken(loginUser);
         }
@@ -139,8 +149,7 @@ public class SysLoginController
      */
     @GetMapping("getRouters")
     @ApiOperation("获取路由信息")
-    public AjaxResult getRouters()
-    {
+    public AjaxResult getRouters() {
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
         return AjaxResult.success(menuService.buildMenus(menus));

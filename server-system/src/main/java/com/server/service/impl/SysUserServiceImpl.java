@@ -544,4 +544,14 @@ public class SysUserServiceImpl implements ISysUserService
         }
         return successMsg.toString();
     }
+
+    /**
+     * 获取邮箱绑定的账号
+     * @param email 邮箱
+     * @return 结果
+     */
+    @Override
+    public SysUser selectUserByEmail(String email) {
+        return userMapper.selectUserByEmail(email);
+    }
 }

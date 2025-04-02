@@ -204,4 +204,11 @@ public interface ISysUserService
      * @return 结果
      */
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName);
+
+    /**
+     * 获取邮箱绑定的账号
+     * @param email 邮箱
+     * @return 结果
+     */
+    SysUser selectUserByEmail(String email);
 }
