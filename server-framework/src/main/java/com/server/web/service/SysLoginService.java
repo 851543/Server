@@ -9,10 +9,7 @@ import com.server.core.domain.model.LoginUser;
 import com.server.core.redis.RedisCache;
 import com.server.exception.ServiceException;
 import com.server.exception.user.*;
-import com.server.utils.DateUtils;
-import com.server.utils.MessageUtils;
-import com.server.utils.SecurityUtils;
-import com.server.utils.StringUtils;
+import com.server.utils.*;
 import com.server.utils.ip.IpUtils;
 import com.server.manager.AsyncManager;
 import com.server.manager.factory.AsyncFactory;
@@ -64,7 +61,7 @@ public class SysLoginService {
         // 验证码校验
         validateCaptcha(username, code, uuid);
         // 邮箱账号登录
-        if (username.contains("@")){
+        if (EmailUtils.isValidBasicFormat(username)) {
             SysUser user = userService.selectUserByEmail(username);
             if (ObjectUtils.isEmpty(user)) {throw new ServiceException(MessageUtils.message("user.email.not_bound"));}
             username =  user.getUserName();

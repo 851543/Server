@@ -69,6 +69,7 @@ public class TokenService
             try
             {
                 Claims claims = parseToken(token);
+                log.info(claims.toString());
                 // 解析对应的权限以及用户信息
                 String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
                 String userKey = getTokenKey(uuid);
