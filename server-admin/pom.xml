@@ -55,6 +55,12 @@
             <artifactId>server-framework</artifactId>
         </dependency>
 
+        <!-- 代码生成 -->
+        <dependency>
+            <groupId>com.server</groupId>
+            <artifactId>server-generator</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
