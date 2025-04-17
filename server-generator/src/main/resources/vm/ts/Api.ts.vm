@@ -43,4 +43,6 @@ export class ${ClassName}Service {
       method: 'delete'
     })
   }
+
+  //
 }
