@@ -142,7 +142,7 @@ public class VelocityUtils
         templates.add("vm/java/controller.java.vm");
         templates.add("vm/xml/mapper.xml.vm");
         templates.add("vm/sql/sql.vm");
-        templates.add("vm/js/api.js.vm");
+        templates.add("vm/ts/Api.ts.vm");
         if (GenConstants.TPL_CRUD.equals(tplCategory))
         {
             templates.add(useWebType + "/index.vue.vm");
@@ -211,7 +211,7 @@ public class VelocityUtils
         {
             fileName = businessName + "Menu.sql";
         }
-        else if (template.contains("api.js.vm"))
+        else if (template.contains("Api.ts.vm"))
         {
             fileName = StringUtils.format("{}/api/{}/{}.js", vuePath, moduleName, businessName);
         }

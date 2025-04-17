@@ -17,7 +17,7 @@ import com.server.core.controller.BaseController;
 import com.server.core.domain.AjaxResult;
 import com.server.enums.BusinessType;
 import ${packageName}.domain.${ClassName};
-import ${packageName}.service.I${ClassName}Service;
+import ${packageName}.service.${ClassName}Service;
 import com.server.utils.poi.ExcelUtil;
 #if($table.crud || $table.sub)
 import com.server.core.page.TableDataInfo;
