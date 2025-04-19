@@ -86,7 +86,11 @@
         :current-page="queryParams.pageNum"
         :page-size="queryParams.pageSize"
         @pagination="getList"
-        @selection-change="handleSelectionChange">
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        @selection-change="handleSelectionChange"
+        row-key="${pkColumn.javaField}"
+    >
       <el-table-column type="selection" width="55" align="center"/>
         #foreach($column in $columns)
             #set($javaField=$column.javaField)
@@ -458,6 +462,18 @@
   const handleQuery = () => {
     queryParams.pageNum = 1;
     getList();
+  }
+
+  /** 每页条数改变 */
+  const handleSizeChange = (size: number) => {
+    queryParams.pageSize = size
+    getList()
+  }
+
+  /** 当前页改变 */
+  const handleCurrentChange = (page: number) => {
+    queryParams.pageNum = page
+    getList()
   }
 
   // 多选框选中数据
