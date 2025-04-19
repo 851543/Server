@@ -452,7 +452,6 @@
   const reset = () => {
     // 重置表单数据到初始状态
     Object.assign(form, initialFormState)
-    resetForm(${businessName}Ref.value);
   }
 
   /** 搜索按钮操作 */
