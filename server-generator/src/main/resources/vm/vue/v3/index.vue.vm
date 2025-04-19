@@ -347,7 +347,6 @@
       #if($table.sub)
       const checked${subClassName} = ref([]);
       #end
-  const single = ref(true);
   const multiple = ref(true);
   const total = ref(0);
   const title = ref("");
@@ -465,7 +464,6 @@
   // 多选框选中数据
   const handleSelectionChange = (selection: any) => {
     ids.value = selection.map((item: any) => item.${pkColumn.javaField});
-    single.value = selection.length != 1;
     multiple.value = !selection.length;
   }
 
