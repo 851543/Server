@@ -337,11 +337,11 @@
   import {resetForm} from '@/utils/utils'
   import {ElMessage, ElMessageBox} from 'element-plus'
   import {FormInstance} from 'element-plus'
-  import {${ClassName}Result} from '@/types/system/config'
+  import {${ClassName}Result} from '@/types/${moduleName}/${businessName}'
       #if(${dicts} != '')
           #set($dictsNoSymbol=$dicts.replace("'", ""))
       #end
-  const configList = ref<${ClassName}Result[]>([])
+  const ${businessName}List = ref<${ClassName}Result[]>([])
       #if($table.sub)
       const ${subclassName}List = ref([]);
       #end
