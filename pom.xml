@@ -16,6 +16,7 @@
         <module>server-system</module>
         <module>server-framework</module>
         <module>server-generator</module>
+        <module>server-quartz</module>
     </modules>
     <description>管理系统</description>
 
@@ -222,6 +223,13 @@
             <dependency>
                 <groupId>com.server</groupId>
                 <artifactId>server-generator</artifactId>
+                <version>${server.version}</version>
+            </dependency>
+
+            <!-- 定时任务 -->
+            <dependency>
+                <groupId>com.server</groupId>
+                <artifactId>server-quartz</artifactId>
                 <version>${server.version}</version>
             </dependency>
 

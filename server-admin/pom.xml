@@ -61,6 +61,12 @@
             <artifactId>server-generator</artifactId>
         </dependency>
 
+        <!-- 定时任务 -->
+        <dependency>
+            <groupId>com.server</groupId>
+            <artifactId>server-quartz</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -91,7 +91,6 @@
         row-key="${pkColumn.javaField}"
     >
       <template #default>
-        <el-table-column type="selection" width="55" align="center"/>
           #foreach($column in $columns)
               #set($javaField=$column.javaField)
               #set($parentheseIndex=$column.columnComment.indexOf("（"))
